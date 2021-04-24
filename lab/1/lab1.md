@@ -92,30 +92,26 @@ insert into Borrow value('b4', 'r5', '2020-04-10', NULL);
 
 ### 实体完整性
 
+以下是错误的，因为主键为 `null`
+
 ```sql
-select * from Book
-where id is null;
-insert into book value(null, 'name_abc', 233, 1);
-
-select * from reader
-where id is null;
-
-select * from borrow
-where book_id is null and reader_id is null;
+insert into Book value(null, 'name_abc', null, 233, 1);
 ```
 
 ### 参照完整性
 
+以下是错误的，因为 `book_ID` 为外键
+
 ```sql
-select* from borrow , book
-where borrow.book_id = book.id;
-insert into borrow value('r1', 'b13', '2021.5.12', '2021.5.22');
+insert into Borrow value('b99', 'r1', '2099.1.1', '2099.12.30');
 ```
 
 ### 用户自定义完整性
 
+以下是错误的，因为 `status`、`price` 无意义
+
 ```sql
-insert into book value('b13','abcd','dcba',80, 2); # status 为 2 时无法插入
+insert into Book value('b99', 'name_abc', 'name_author', -5, 2);
 ```
 
 ## SQL 查询
@@ -123,87 +119,78 @@ insert into book value('b13','abcd','dcba',80, 2); # status 为 2 时无法插�
 ### 检索读者 Rose 的读者号和地址
 
 ```sql
-select id, address from reader
-where name = 'Rose';
+select ID, address from Reader where name = 'Rose';
 ```
 
 ### 检索读者 Rose 所借阅读书（包括已还和未还图书）的图书名和借期
 
 ```sql
-select book.name, borrow_date from reader, book, borrow
-where borrow.reader_id = reader.id and borrow.book_id = book.id and reader.name = 'Rose';
+select Book.name, Borrow_Date from Reader, Book, Borrow
+where Borrow.reader_id = Reader.ID and Borrow.book_id = Book.ID and Reader.name = 'Rose';
 ```
 
 ### 检索未借阅图书的读者姓名
 
 ```sql
-select reader.name from reader
-where reader.id not in(
-    select distinct reader_id from borrow);
+select Reader.name from Reader
+where Reader.ID not in (select Reader_ID from Borrow group by Reader_ID);
 ```
 
 ### 检索 Ullman 所写的书的书名和单价
 
 ```sql
-select name, price from book
-where author = 'Ullman';
+select name, price from Book where author = 'Ullman';
 ```
 
 ### 检索读者“李林”借阅未还的图书的图书号和书名
 
 ```sql
-select book.id, book.name from book, reader, borrow
-where book.id = borrow.book_id and reader.id = borrow.reader_id and reader.name = '李林' and book.status = 1;
+select Book.ID, Book.name from Book, Reader, Borrow
+where Book.ID = Borrow.book_ID and Reader.ID = Borrow.Reader_ID and Reader.name = '李林' and Book.status = 1 and Return_Date is null;
 ```
 
 ### 检索借阅图书数目超过 3 本的读者姓名
 
 ```sql
-select distinct reader.name from reader, borrow
-where reader.id = borrow.reader_id and
-reader.id in(
-    select reader_id from borrow
-    group by reader_id
-    having count(*) > 3
-);
+select Reader.name from Reader, Borrow
+where Reader.ID = Borrow.Reader_ID
+  and Reader.ID in (select Reader_ID from Borrow group by Reader_ID having count(*) > 3)
+group by Reader.name;
 ```
 
 ### 检索没有借阅读者“李林”所借的任何一本书的读者姓名和读者号
 
 ```sql
-select name, id from reader where id not in(
-    select reader.id from borrow, reader
-    where reader.id = borrow.reader_id and borrow.book_id in(
-        select distinct book_id from borrow, reader
-        where borrow.reader_id = reader.id and reader.name = '李林'
-    )
+select name, ID from Reader
+where ID not in (
+    select Reader.ID from Borrow, Reader
+    where Reader.ID = Borrow.Reader_ID
+      and Borrow.book_ID in (select book_ID from Borrow, Reader where Borrow.Reader_ID = Reader.ID and Reader.name = '李林' group by book_ID)
 );
 ```
 
 ### 检索书名中包含“Oracle”的图书书名及图书号
 
 ```sql
-select name, id from book
-where name like '%Oracle%';
+select name, ID from Book where name like '%Oracle%';
 ```
 
 ### 创建一个读者借书信息的视图，该视图包含读者号、姓名、所借图书号、图书名和借期；并使用该视图查询最近一年所有读者的读者号以及所借阅的不同图书数
 
 ```sql
-#drop view borrow_view;
-create view borrow_view (read_id, read_name, book_id, book_name, borrow_date) as (
-    select reader_id, reader.name, book_id, book.name, borrow_date from reader, book, borrow
-    where reader.id = borrow.reader_id and book.id = borrow.book_id
+create view borrow_view (Reader_ID, Reader_name, Book_ID, Book_name, Borrow_Date) as (
+    select Reader_ID, Reader.name, book_ID, Book.name, Borrow_Date from Reader, Book, Borrow
+    where Reader.ID = Borrow.Reader_ID and Book.ID = Borrow.book_ID
 );
 
-select * from borrow_view;
-
-select read_id, count(distinct book_id) as num from borrow_view
-where year(now())-year(borrow_date) <= 1
-group by reader_id;
+select Reader_ID, count(distinct Book_ID) as BookCnts from borrow_view
+where date_sub(now(), interval 1 year) <= Borrow_Date
+group by Reader_ID;
 ```
 
 ## Book.ID 存储过程
+
+TODO:
 
 ```sql
 drop procedure if exists modify_bookid;
@@ -232,6 +219,8 @@ select *from borrow;
 ```
 
 ## status 存储过程
+
+TODO:
 
 ```sql
 drop procedure if exists check_status;
