@@ -214,48 +214,43 @@ drop procedure if exists updatebookid;
 
 ## status 存储过程
 
-TODO:
+<!-- select status, Return_Date from Book, Borrow, (select book_ID, max(borrow_date) as borrow_date_max from Borrow group by book_ID) as targ
+              where Borrow.Borrow_Date = targ.borrow_date_max and targ.book_ID = Borrow.book_ID and Book.ID = targ.book_ID; -->
 
 ```sql
 delimiter //
 create procedure checkstatus(out num int)
 begin
-    declare idc char(8);
-    declare d date;
-    declare s, state int default 0;
+    declare ret_date date;
+    declare stat, eof int default 0;
     declare ct cursor for (
-        select Book.ID, Book.status, t.Return_Date
-        from Book,
-             (select tt.book_ID, Return_Date from Borrow,
-                   (
-                       select book_ID, max(borrow_date) as bd from Borrow
-                       group by book_ID) tt
-              where Borrow.Borrow_Date = tt.bd
-                and tt.book_ID = Borrow.book_ID
-             ) t
-        where Book.ID = t.book_ID);
-    declare continue handler for not found set state = 1;
+        select status, Borrow.Return_Date from Borrow
+            join Book on Book.ID = Borrow.book_ID
+            left outer join Borrow Bnew on Borrow.Borrow_Date < Bnew.Borrow_Date and Borrow.book_ID = Bnew.book_ID
+        where Bnew.book_ID is null
+    );
+    declare continue handler for not found set eof = 1;
     open ct;
+
     set num = 0;
     repeat
-        if state = 0 then
-            fetch ct into idc, s, d;
-            if d is null and s = 0 then
+        if eof = 0 then
+            fetch ct into stat, ret_date;
+            if ret_date is null and stat = 0 then
                 set num = num + 1;
             end if;
-            if d is not null and s = 1 then
+            if ret_date is not null and stat = 1 then
                 set num = num + 1;
             end if;
         end if;
-    until state = 1
+    until eof = 1
         end repeat;
     close ct;
 end //
 delimiter ;
 
-call check_status(@num);
+call checkstatus(@num);
 select @num;
-
 drop procedure if exists checkstatus;
 ```
 
