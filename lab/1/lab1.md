@@ -190,32 +190,28 @@ group by Reader_ID;
 
 ## Book.ID 存储过程
 
-TODO:
+<!-- drop procedure if exists modify_bookid; -->
 
 ```sql
-drop procedure if exists modify_bookid;
 delimiter //
-create procedure modify_bookid(in idp char(8), in idm char(8))
+create procedure updatebookid(in origin char(8), in new char(8))
 BEGIN
-    #alter table book drop primary key;
-    alter table borrow drop foreign key FK_B;
-    update book
-    set id = idm
-    where book.id = idp;
+    alter table Borrow
+        drop foreign key Borrow_Book_ID_fk;
+    update Book set ID = new
+    where Book.ID = origin;
 
-    update borrow
-    set borrow.book_id = idm
-    where borrow.book_id = idp;
-    alter table borrow add constraint FK_B foreign key(book_id) references book(id);
-    #alter table book add primary key(id);
+    update Borrow set Borrow.book_ID = new
+    where Borrow.book_ID = origin;
+    alter table Borrow
+        add constraint Borrow_Book_ID_fk foreign key (book_ID) references Book (ID);
 END //
 delimiter ;
 
-select *from borrow;
-call modify_bookid('b12', 'b13');
-call modify_bookid('b13', 'b12');
-select * from book;
-select *from borrow;
+call updatebookid('b12', 'b13');
+call updatebookid('b1', 'b99');
+
+drop procedure if exists updatebookid;
 ```
 
 ## status 存储过程
@@ -223,36 +219,38 @@ select *from borrow;
 TODO:
 
 ```sql
-drop procedure if exists check_status;
 delimiter //
-create procedure check_status (out num int)
+create procedure check_status(out num int)
 begin
     declare idc char(8);
     declare d date;
     declare s, state int default 0;
-    declare ct cursor for(
-        select book.id, book.status, t.return_date from  book,
-        (select tt.book_id, return_date from borrow,(
-              select book_id, max(borrow_date) as bd from borrow
-              group by book_id) tt
-		    where borrow.borrow_date = tt.bd and tt.book_id = borrow.book_id
-		) t
-        where book.id = t.book_id);
-	declare continue handler for not found set state = 1;
+    declare ct cursor for (
+        select Book.ID, Book.status, t.Return_Date
+        from Book,
+             (select tt.book_ID, Return_Date from Borrow,
+                   (
+                       select book_ID, max(borrow_date) as bd from Borrow
+                       group by book_ID) tt
+              where Borrow.Borrow_Date = tt.bd
+                and tt.book_ID = Borrow.book_ID
+             ) t
+        where Book.ID = t.book_ID);
+    declare continue handler for not found set state = 1;
     open ct;
     set num = 0;
     repeat
         if state = 0 then
             fetch ct into idc, s, d;
             if d is null and s = 0 then
-			    set num = num + 1;
-			end if;
-		    if d is not null and s = 1 then
                 set num = num + 1;
-		    end if;
-	    end if;
-        until state = 1
-	end repeat;
+            end if;
+            if d is not null and s = 1 then
+                set num = num + 1;
+            end if;
+        end if;
+    until state = 1
+        end repeat;
     close ct;
 end //
 delimiter ;
@@ -263,45 +261,39 @@ select @num;
 
 ## status 触发器
 
-TODO
-
 <!-- drop trigger if exists modify_status; -->
 
 ```sql
 delimiter //
-create trigger modify_status after update on borrow for each row
+create trigger updatestatus after update on Borrow for each row
 begin
-    declare s date;
-    select new.return_date into s;
-    if s is not null then
-        update book set status = 0
-        where book.id = new.book_id;
-	end if;
-    if s is null then
-        update book set status = 1
-        where book.id = new.book_id;
-	end if;
+    declare ret_dat date;
+    declare brw_dat date;
+    select new.Return_Date into ret_dat;
+    select new.Borrow_Date into brw_dat;
+    if ret_dat is not null and brw_dat is not null then
+        update Book set status = 0 where Book.ID = new.book_ID;
+    end if;
+    if ret_dat is null and brw_dat is not null then
+        update Book set status = 1 where Book.ID = new.book_ID;
+    end if;
 end //
 
-create trigger modify_status2 after insert on borrow for each row
+create trigger insertstatus after insert on Borrow for each row
 begin
-    declare s date;
-    select new.return_date into s;
-    if s is not null then
-        update book set status = 0
-        where book.id = new.book_id;
-	end if;
-    if s is null then
-        update book set status = 1
-        where book.id = new.book_id;
-	end if;
+    declare ret_dat date;
+    declare brw_dat date;
+    select new.Return_Date into ret_dat;
+    select new.Borrow_Date into brw_dat;
+    if ret_dat is not null and brw_dat is not null then
+        update Book set status = 0 where Book.ID = new.book_ID;
+    end if;
+    if ret_dat is null and brw_dat is not null then
+        update Book set status = 1 where Book.ID = new.book_ID;
+    end if;
 end //
 delimiter ;
 
-select * from book;
-update borrow set return_date = '2021.12.24'
-where book_id = 'b11';
-select * from book;
-insert into borrow values ('b11', 'r6', '2021.12.25', null);
-select * from book;
+insert into Borrow values ('b10', 'r5', '2021.12.25', null);
+update Borrow set Return_Date = '2099.10.24' where book_ID = 'b1';
 ```
