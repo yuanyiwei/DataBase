@@ -190,8 +190,6 @@ group by Reader_ID;
 
 ## Book.ID 存储过程
 
-<!-- drop procedure if exists modify_bookid; -->
-
 ```sql
 delimiter //
 create procedure updatebookid(in origin char(8), in new char(8))
@@ -220,7 +218,7 @@ TODO:
 
 ```sql
 delimiter //
-create procedure check_status(out num int)
+create procedure checkstatus(out num int)
 begin
     declare idc char(8);
     declare d date;
@@ -257,11 +255,11 @@ delimiter ;
 
 call check_status(@num);
 select @num;
+
+drop procedure if exists checkstatus;
 ```
 
 ## status 触发器
-
-<!-- drop trigger if exists modify_status; -->
 
 ```sql
 delimiter //
@@ -296,4 +294,7 @@ delimiter ;
 
 insert into Borrow values ('b10', 'r5', '2021.12.25', null);
 update Borrow set Return_Date = '2099.10.24' where book_ID = 'b1';
+
+drop trigger if exists insertstatus;
+drop trigger if exists updatestatus;
 ```
