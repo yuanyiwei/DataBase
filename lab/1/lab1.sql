@@ -124,15 +124,15 @@ group by Reader_ID;
 delimiter //
 create procedure updatebookid(in origin char(8), in new char(8))
 BEGIN
-    alter table Borrow
-        drop foreign key Borrow_Book_ID_fk;
-    update Book set ID = new
-    where Book.ID = origin;
+    declare Bname varchar(10);
+    declare Bauthor varchar(10);
+    declare Bprice float;
+    declare Bstatus int;
 
-    update Borrow set Borrow.book_ID = new
-    where Borrow.book_ID = origin;
-    alter table Borrow
-        add constraint Borrow_Book_ID_fk foreign key (book_ID) references Book (ID);
+    select name, author, price, status into Bname, Bauthor, Bprice, Bstatus from Book where ID = origin;
+    Insert into Book(ID, name, author, price, status) value (new, Bname, Bauthor, Bprice, Bstatus);
+    update Borrow set Book_ID = new where Book_ID = origin;
+    delete from Book where ID=origin;
 END //
 delimiter ;
 
