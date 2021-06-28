@@ -258,9 +258,9 @@ public class BusinessManager extends JFrame implements ActionListener {
 	private void setTable(JTable table, Object[][] data, String[] colName) {   
         DefaultTableModel dtm = new DefaultTableModel(   
             colName,0);
-        for (int i = 0; i < data.length; i ++) {
-            dtm.addRow(data[i]);
-        }
+		for (Object[] datum : data) {
+			dtm.addRow(datum);
+		}
            
         table.setModel(dtm);   
         TableColumnModel tcm = table.getColumnModel();   
@@ -378,5 +378,4 @@ public class BusinessManager extends JFrame implements ActionListener {
 		resPane.setPreferredSize(new Dimension(970, 515));
 		panelBusiness.add(resPane);
 	}
-
 }

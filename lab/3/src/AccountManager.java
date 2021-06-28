@@ -46,8 +46,8 @@ public class AccountManager extends JFrame implements ActionListener {
 	private String[][] colName = {{"", "账户号", "账户类型", "余额", "开户日期", "最近访问日期", "利率", "货币类型", "支行名", "身份证号"},
 								{"", "账户号", "账户类型", "余额", "开户日期", "最近访问日期", "透支额", "支行名", "身份证号"}};
 	private String[] syms = {"=", ">", "<", ">=", "<=", "<>"};
-	private Object[][][] data = {{{new Boolean(false), "", "", "", "", "", "", ""}},
-								{{new Boolean(false), "", "", "", "", "", ""}}};
+	private Object[][][] data = {{{Boolean.FALSE, "", "", "", "", "", "", ""}},
+								{{Boolean.FALSE, "", "", "", "", "", ""}}};
 	private int INSERT = 1, DELETE = 2, UPDATE = 3, SEARCH = 4;
 	private Object[][] oldTable;
 	private int catSel = 0;
