@@ -113,23 +113,25 @@ public class AccountManager extends JFrame implements ActionListener {
 			int rowCnt = resTable.getRowCount();
 			int colCnt = resTable.getColumnCount() - 2;
 			for (int i = 0; i < rowCnt; i ++) {
-				String asql, cond = "", change = "";
+				String asql;
+				StringBuilder cond = new StringBuilder();
+				String change = "";
 				for (int j = 0; j < colCnt - 1; j ++) {
 					if (j == 4 || j == 5) {
-						cond += colName[catSel][j + 1] + " = " + "STR_TO_DATE('" + oldTable[i][j + 1].toString().substring(0, 10) + "', '%Y/%m/%d')";
+						cond.append(colName[catSel][j + 1]).append(" = ").append("STR_TO_DATE('").append(oldTable[i][j + 1].toString().substring(0, 10)).append("', '%Y/%m/%d')");
 						change += colName[catSel][j + 1] + " = " + "STR_TO_DATE('" + resTable.getValueAt(i, j + 1).toString().substring(0, 10) + "', '%Y/%m/%d')";
 					}
 					else {
 						if (oldTable[i][j + 1] == null || oldTable[i][j + 1].equals("")) {
-							cond += colName[catSel][j + 1] + " is null ";
+							cond.append(colName[catSel][j + 1]).append(" is null ");
 						}
 						else {
-							cond += colName[catSel][j + 1] + " = '" + oldTable[i][j + 1] + "' ";
+							cond.append(colName[catSel][j + 1]).append(" = '").append(oldTable[i][j + 1]).append("' ");
 						}
 						change += colName[catSel][j + 1] + " = '" + resTable.getValueAt(i, j + 1) + "' ";
 					}
 					if (j < colCnt - 2) {
-						cond += " and ";
+						cond.append(" and ");
 						change += ",";
 					}
 				}
@@ -199,7 +201,6 @@ public class AccountManager extends JFrame implements ActionListener {
 					showInfo(0);
 				}
 			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 				showError(e1.getMessage());
 			}

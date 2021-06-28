@@ -60,7 +60,6 @@ public class ClientManager extends JFrame implements ActionListener {
                 try {
                     ResultSet aRSet = exeSQL(conn, asql, INSERT);
                 } catch (SQLException e1) {
-                    // TODO Auto-generated catch block
                     e1.printStackTrace();
                     showError(e1.getMessage());
                 }
@@ -83,7 +82,6 @@ public class ClientManager extends JFrame implements ActionListener {
                         exeSQL(conn, asql, DELETE);
                         System.out.println(asql);
                     } catch (SQLException e1) {
-                        // TODO Auto-generated catch block
                         e1.printStackTrace();
                         showError(e1.getMessage());
                     }
@@ -118,7 +116,6 @@ public class ClientManager extends JFrame implements ActionListener {
                         exeSQL(conn, asql, DELETE);
                         System.out.println(i + asql);
                     } catch (SQLException e1) {
-                        // TODO Auto-generated catch block
                         e1.printStackTrace();
                         showError(e1.getMessage());
                     }
@@ -172,7 +169,6 @@ public class ClientManager extends JFrame implements ActionListener {
                     showInfo(0);
                 }
             } catch (SQLException e1) {
-                // TODO Auto-generated catch block
                 e1.printStackTrace();
                 showError(e1.getMessage());
             }
@@ -203,7 +199,6 @@ public class ClientManager extends JFrame implements ActionListener {
                 res1++;
             }
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
             showError(e.getMessage());
             return false;
@@ -217,7 +212,6 @@ public class ClientManager extends JFrame implements ActionListener {
                 res2++;
             }
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
             showError(e.getMessage());
             return false;
@@ -280,14 +274,14 @@ public class ClientManager extends JFrame implements ActionListener {
         }
         ResultSet resSet = null;
         try {
-            if (mode == DELETE || mode == UPDATE) {
+            if (mode == DELETE || mode == UPDATE || mode == INSERT) {
                 stmt = conn.createStatement();
                 stmt.executeUpdate(sql);
                 return null;
-            } else {
+            } else if (mode == SEARCH) {
                 pstmt = conn.prepareStatement(sql);
                 resSet = pstmt.executeQuery();
-            }
+            } else System.out.println("Err mode"); // TODO: try catch
         } catch (SQLException e) {
             //TODO: handle exception
             e.printStackTrace();
@@ -299,8 +293,8 @@ public class ClientManager extends JFrame implements ActionListener {
     private void initTable(JTable table, Object[][] data, String[] colName) {
         DefaultTableModel dtm = new DefaultTableModel(
                 colName, 0);
-        for (int i = 0; i < data.length; i++) {
-            dtm.addRow(data[i]);
+        for (Object[] datum : data) {
+            dtm.addRow(datum);
         }
 
         table.setModel(dtm);

@@ -65,7 +65,6 @@ public class DebtManager extends JFrame implements ActionListener {
 				try {
 					ResultSet aRSet = exeSQL(conn, asql, INSERT);
 				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 					showError(e1.getMessage());
 				}
@@ -74,7 +73,6 @@ public class DebtManager extends JFrame implements ActionListener {
 				try {
 					ResultSet aRSet = exeSQL(conn, asql, INSERT);
 				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 					showError(e1.getMessage());
 				}
@@ -93,7 +91,6 @@ public class DebtManager extends JFrame implements ActionListener {
 					try {
 						exeSQL(conn, asql, DELETE);
 					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 						showError(e1.getMessage());
 					}
@@ -101,7 +98,6 @@ public class DebtManager extends JFrame implements ActionListener {
 					try {
 						exeSQL(conn, asql, DELETE);
 					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 						showError(e1.getMessage());
 					}
@@ -109,7 +105,6 @@ public class DebtManager extends JFrame implements ActionListener {
 					try {
 						exeSQL(conn, asql, DELETE);
 					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 						showError(e1.getMessage());
 					}
@@ -152,7 +147,7 @@ public class DebtManager extends JFrame implements ActionListener {
 				List<Object[]> resList = new ArrayList<Object[]>();
 				while(aRSet != null && aRSet.next()) {
 					Object[] line = new Object[length + 2];
-					line[0] = new Boolean(false);
+					line[0] = Boolean.FALSE;
 					for (int j = 1; j < line.length - 2; j ++) {
 						line[j] = aRSet.getObject(j);
 					}
@@ -187,7 +182,6 @@ public class DebtManager extends JFrame implements ActionListener {
 					showInfo(0);
 				}
 			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 				showError(e1.getMessage());
 			}
@@ -344,8 +338,8 @@ public class DebtManager extends JFrame implements ActionListener {
 					oldTable[selNum][length + 1] = newstatus;
 					initTable(resTable, oldTable, colName);
 				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
+					showError(e1.getMessage());
 				}
 			}
 			else if (result == JOptionPane.OK_OPTION) {

@@ -63,7 +63,6 @@ public class StaffManager extends JFrame implements ActionListener {
                 try {
                     ResultSet aRSet = exeSQL(conn, asql, INSERT);
                 } catch (SQLException e1) {
-                    // TODO Auto-generated catch block
                     e1.printStackTrace();
                     showError(e1.getMessage());
                 }
@@ -86,7 +85,6 @@ public class StaffManager extends JFrame implements ActionListener {
                         exeSQL(conn, asql, DELETE);
                         System.out.println(asql);
                     } catch (SQLException e1) {
-                        // TODO Auto-generated catch block
                         e1.printStackTrace();
                         showError(e1.getMessage());
                     }
@@ -123,7 +121,6 @@ public class StaffManager extends JFrame implements ActionListener {
                     try {
                         exeSQL(conn, asql, DELETE);
                     } catch (SQLException e1) {
-                        // TODO Auto-generated catch block
                         e1.printStackTrace();
                         showError(e1.getMessage());
                     }
@@ -182,7 +179,6 @@ public class StaffManager extends JFrame implements ActionListener {
                     showInfo(0);
                 }
             } catch (SQLException e1) {
-                // TODO Auto-generated catch block
                 e1.printStackTrace();
                 showError(e1.getMessage());
             }

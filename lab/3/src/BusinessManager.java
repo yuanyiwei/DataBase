@@ -98,7 +98,6 @@ public class BusinessManager extends JFrame implements ActionListener {
 					}
 				}
 			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 				showError(e1.getMessage());
 			}
@@ -249,7 +248,6 @@ public class BusinessManager extends JFrame implements ActionListener {
 				showError(e1.getMessage());
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			showError(e.getMessage());
 		}

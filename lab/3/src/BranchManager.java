@@ -49,7 +49,6 @@ public class BranchManager extends JFrame implements ActionListener {
                 try {
                     ResultSet aRSet = exeSQL(conn, asql, INSERT);
                 } catch (SQLException e1) {
-                    // TODO Auto-generated catch block
                     e1.printStackTrace();
                     showError(e1.getMessage());
                 }
@@ -72,7 +71,6 @@ public class BranchManager extends JFrame implements ActionListener {
                         exeSQL(conn, asql, DELETE);
                         System.out.println(asql);
                     } catch (SQLException e1) {
-                        // TODO Auto-generated catch block
                         e1.printStackTrace();
                         showError(e1.getMessage());
                     }
@@ -94,7 +92,6 @@ public class BranchManager extends JFrame implements ActionListener {
                         exeSQL(conn, asql, UPDATE);
                         System.out.println(asql);
                     } catch (SQLException e1) {
-                        // TODO Auto-generated catch block
                         e1.printStackTrace();
                         showError(e1.getMessage());
                     }
@@ -150,7 +147,6 @@ public class BranchManager extends JFrame implements ActionListener {
                         showInfo(0);
                     }
                 } catch (SQLException e1) {
-                    // TODO Auto-generated catch block
                     e1.printStackTrace();
                     showError(e1.getMessage());
                 }
@@ -200,7 +196,6 @@ public class BranchManager extends JFrame implements ActionListener {
                 res1++;
             }
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
             showError(e.getMessage());
             return false;
