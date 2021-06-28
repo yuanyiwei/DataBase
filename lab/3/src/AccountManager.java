@@ -73,7 +73,6 @@ public class AccountManager extends JFrame implements ActionListener {
 				try {
 					ResultSet aRSet = exeSQL(conn, asql, INSERT);
 				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 					showError(e1.getMessage());
 				}
@@ -82,7 +81,6 @@ public class AccountManager extends JFrame implements ActionListener {
 				try {
 					ResultSet aRSet = exeSQL(conn, asql, INSERT);
 				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 					showError(e1.getMessage());
 				}
@@ -97,7 +95,6 @@ public class AccountManager extends JFrame implements ActionListener {
 					try {
 						exeSQL(conn, asql, DELETE);
 					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 						showError(e1.getMessage());
 					}
@@ -105,7 +102,6 @@ public class AccountManager extends JFrame implements ActionListener {
 					try {
 						exeSQL(conn, asql, DELETE);
 					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 						showError(e1.getMessage());
 					}
@@ -120,8 +116,8 @@ public class AccountManager extends JFrame implements ActionListener {
 				String asql, cond = "", change = "";
 				for (int j = 0; j < colCnt - 1; j ++) {
 					if (j == 4 || j == 5) {
-						cond += colName[catSel][j + 1] + " = " + "to_date('" + oldTable[i][j + 1].toString().substring(0, 10) + "', 'yyyy/mm/dd')";
-						change += colName[catSel][j + 1] + " = " + "to_date('" + resTable.getValueAt(i, j + 1).toString().substring(0, 10) + "', 'yyyy/mm/dd')";
+						cond += colName[catSel][j + 1] + " = " + "STR_TO_DATE('" + oldTable[i][j + 1].toString().substring(0, 10) + "', '%Y/%m/%d')";
+						change += colName[catSel][j + 1] + " = " + "STR_TO_DATE('" + resTable.getValueAt(i, j + 1).toString().substring(0, 10) + "', '%Y/%m/%d')";
 					}
 					else {
 						if (oldTable[i][j + 1] == null || oldTable[i][j + 1].equals("")) {
@@ -142,7 +138,6 @@ public class AccountManager extends JFrame implements ActionListener {
 					try {
 						exeSQL(conn, asql, DELETE);
 					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 						showError(e1.getMessage());
 					}
@@ -151,28 +146,28 @@ public class AccountManager extends JFrame implements ActionListener {
 			initTable(resTable, data[catSel], colName[catSel]);
 		}
 		if (e.getSource() == searchBtn) {
-			String cond = "";
+			StringBuilder cond = new StringBuilder();
 			for (int i = 0; i < length; i ++) {
 				if (!paraText[i].getText().equals("") && !paraText[i].getText().equals("yyyy/mm/dd")) {
-					if (!cond.equals(""))  {
-						cond += " and ";
+					if (!cond.toString().equals(""))  {
+						cond.append(" and ");
 					}
 					if (i == 3 || i == 4) {
-						cond += colName[catSel][i + 1] + syms[paraSymBox[i].getSelectedIndex()] + "to_date('" + paraText[i].getText() + "', 'yyyy/mm/dd')";
+						cond.append(colName[catSel][i + 1]).append(syms[paraSymBox[i].getSelectedIndex()]).append("to_date('").append(paraText[i].getText()).append("', 'yyyy/mm/dd')");
 					}
 					else {
-						cond += colName[catSel][i + 1] + syms[paraSymBox[i].getSelectedIndex()] + " '" + paraText[i].getText() + "'";
+						cond.append(colName[catSel][i + 1]).append(syms[paraSymBox[i].getSelectedIndex()]).append(" '").append(paraText[i].getText()).append("'");
 					}
 				}
 			}
 			if (!condText.getText().equals("")) {
-				if (!cond.equals("")) {
-					cond += " and ";
+				if (!cond.toString().equals("")) {
+					cond.append(" and ");
 				}
-				cond += condText.getText();
+				cond.append(condText.getText());
 			}
 			String asql;
-			if (cond.equals("")) {
+			if (cond.toString().equals("")) {
 				asql = "select * from " + dbName[catSel] + ", 拥有账户 where " + dbName[catSel]
 						+ ".账户号 = 拥有账户.账户号 and " + dbName[catSel] + ".账户类型 = 拥有账户.账户类型";
 			}
@@ -185,7 +180,7 @@ public class AccountManager extends JFrame implements ActionListener {
 				List<Object[]> resList = new ArrayList<Object[]>();
 				while(aRSet != null && aRSet.next()) {
 					Object[] line = new Object[length + 1];
-					line[0] = new Boolean(false);
+					line[0] = Boolean.FALSE;
 					for (int j = 1; j < line.length; j ++) {
 						line[j] = aRSet.getObject(j);
 					}
@@ -289,7 +284,7 @@ public class AccountManager extends JFrame implements ActionListener {
 			for (int i = 0; i < length - 2; i ++) {
 				paras[i] = nparaText[i].getText();
 				if (i == 3 || i == 4) {
-					newRow += "to_date('" + paras[i] + "', 'yyyy/mm/dd')";
+					newRow += "STR_TO_DATE('" + paras[i] + "', '%Y/%m/%d')";
 				}
 				else {
 					newRow += "'" + paras[i] + "'";

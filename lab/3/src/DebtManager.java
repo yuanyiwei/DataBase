@@ -125,7 +125,7 @@ public class DebtManager extends JFrame implements ActionListener {
 						cond += " and ";
 					}
 					if (i == 3) {
-						cond += colName[i + 1] + syms[paraSymBox[i].getSelectedIndex()] + "to_date('" + paraText[i].getText() + "', 'yyyy/mm/dd')";
+						cond += colName[i + 1] + syms[paraSymBox[i].getSelectedIndex()] + "STR_TO_DATE('" + paraText[i].getText() + "', '%Y/%m/%d')";
 					}
 					else {
 						cond += colName[i + 1] + syms[paraSymBox[i].getSelectedIndex()] + " '" + paraText[i].getText() + "'";
@@ -252,7 +252,7 @@ public class DebtManager extends JFrame implements ActionListener {
 			for (int i = 0; i < length - 1; i ++) {
 				paras[i] = nparaText[i].getText();
 				if (i == 3) {
-					newRow += "to_date('" + paras[i] + "', 'yyyy/mm/dd')";
+					newRow += "STR_TO_DATE('" + paras[i] + "', '%Y/%m/%d')";
 				}
 				else {
 					newRow += "'" + paras[i] + "'";
@@ -322,7 +322,7 @@ public class DebtManager extends JFrame implements ActionListener {
 				money = nMoneyField.getText();
 			}
 			if (date != null && money != null) {
-				asql = "insert into 支付情况 (贷款号, 日期, 金额) Values('" + deltID + "', to_date('" + date + "', 'yyyy/mm/dd'), '" + money +"')";
+				asql = "insert into 支付情况 (贷款号, 日期, 金额) Values('" + deltID + "', STR_TO_DATE('" + date + "', '%Y/%m/%d'), '" + money +"')";
 				String moneysql = "select sum(金额) from 支付情况 where 支付情况.贷款号 = '" + resTable.getValueAt(selNum, 1) + "'";
 				ResultSet moneyres;
 				try {

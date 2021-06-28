@@ -71,16 +71,16 @@ public class BusinessManager extends JFrame implements ActionListener {
 					if (catSel == 0) {
 						asql = "select sum(\"余额\"), count( \"拥有账户\".\"身份证号\") from " + catStr[catSel] + ", \"拥有账户\""
 								+ " where \"拥有账户\".\"账户号\" = " + catStr[catSel] + ".\"账户号\"";
-						cond = " and " + catStr[catSel] + ".\"开户日期\" > " + "to_date('" + timepoints[i] + "', 'yyyy/mm/dd')"
-								+ " and " + catStr[catSel] + ".\"开户日期\" <= " + "to_date('" + timepoints[i + 1] + "', 'yyyy/mm/dd')"
+						cond = " and " + catStr[catSel] + ".\"开户日期\" > " + "STR_TO_DATE('" + timepoints[i] + "', '%Y/%m/%d')"
+								+ " and " + catStr[catSel] + ".\"开户日期\" <= " + "STR_TO_DATE('" + timepoints[i + 1] + "', '%Y/%m/%d')"
 								+ "and \"拥有账户\".\"支行名\" = '" + branchStr[branchSel] + "'";
 						asql += cond;
 					}
 					else {
 						asql = "select sum(\"金额\"), count( \"拥有贷款\".\"身份证号\") from " + catStr[catSel] + ", \"拥有贷款\""
 								+ " where \"拥有贷款\".\"贷款号\" = " + catStr[catSel] + ".\"贷款号\"";
-						cond = " and " + catStr[catSel] + ".\"日期\" > " + "to_date('" + timepoints[i] + "', 'yyyy/mm/dd')"
-								+ " and " + catStr[catSel] + ".\"日期\" <= " + "to_date('" + timepoints[i + 1] + "', 'yyyy/mm/dd')"
+						cond = " and " + catStr[catSel] + ".\"日期\" > " + "STR_TO_DATE('" + timepoints[i] + "', '%Y/%m/%d')"
+								+ " and " + catStr[catSel] + ".\"日期\" <= " + "STR_TO_DATE('" + timepoints[i + 1] + "', '%Y/%m/%d')"
 								+ "and \"贷款\".\"支行名\" = '" + branchStr[branchSel] + "'";
 						asql += cond;
 					}
