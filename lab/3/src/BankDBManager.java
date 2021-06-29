@@ -8,7 +8,7 @@ public class BankDBManager extends JFrame implements ActionListener {
     //JFrame jf = new JFrame("Bank Batabase Manager");
     private JTabbedPane tp = new JTabbedPane();
     private JMenuBar menuBar = new JMenuBar();
-    private JMenu menuFile = new JMenu("文件");
+    private JMenu menuFile = new JMenu("设置");
     private JMenuItem itemExit = new JMenuItem("退出");
     private JMenuItem login = new JMenuItem("登陆");
     private JMenuItem logout = new JMenuItem("登出");
@@ -112,7 +112,7 @@ public class BankDBManager extends JFrame implements ActionListener {
         JTextField passwdField = new JTextField(15);
 
         JPanel myPanel = new JPanel();
-        myPanel.setPreferredSize(new Dimension(100, 200));
+        myPanel.setPreferredSize(new Dimension(100, 250));
 
 
         myPanel.add(usedeaultField);

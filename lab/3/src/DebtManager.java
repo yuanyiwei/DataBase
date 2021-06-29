@@ -39,7 +39,7 @@ public class DebtManager extends JFrame implements ActionListener {
 	private String[] labelName = {"贷款号：","支行名：","金额：", "日期：", "身份证号："};
 	private String[] colName = {"", "贷款号","支行名","金额", "日期", "身份证号", "发放状态"};
 	private String[] syms = {"=", ">", "<", ">=", "<=", "<>"};
-	private Object[][] data = {{new Boolean(false), "", "", "", ""}};
+	private Object[][] data = {{Boolean.FALSE, "", "", "", ""}};
 	private int INSERT = 1, DELETE = 2, UPDATE = 3, SEARCH = 4;
 	private Object[][] oldTable;
 	int length = labelName.length;
