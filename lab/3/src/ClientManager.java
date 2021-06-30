@@ -32,7 +32,7 @@ public class ClientManager extends JFrame implements ActionListener {
             "查询无结果"
     };
     private String dbName = "客户";
-    private String[] labelName = {"身份证号：", "负责员工身份证号：", "姓名：", "联系电话：", "家庭住址：", "联系人姓名：", "联系人手机号：", "联系人Email：", "与客户关系："};
+    private String[] labelName = {"身份证号：", "负责员工身份证号：", "客户姓名：", "联系电话：", "家庭住址：", "联系人姓名：", "联系人手机号：", "联系人Email：", "与客户关系："};
     private String[] colName = {"", "身份证号", "员工_身份证号", "姓名", "联系电话", "家庭住址", "联系人姓名", "联系人手机号", "联系人Email", "与客户关系"};
     private String[] syms = {"=", ">", "<", ">=", "<=", "<>"};
     private Object[][] data = {{Boolean.FALSE, "", "", "", "", "", "", "", ""}};
@@ -229,13 +229,14 @@ public class ClientManager extends JFrame implements ActionListener {
         String[] paras = new String[length];
 
         JPanel myPanel = new JPanel();
-        myPanel.setPreferredSize(new Dimension(250, 450));
+        myPanel.setPreferredSize(new Dimension(180, 450));
         for (int i = 0; i < labelName.length; i++) {
             nparaLabel[i] = new JLabel(labelName[i]);
-            nparaText[i] = new JTextField(20);
+            nparaText[i] = new JTextField(15);
             myPanel.add(nparaLabel[i]);
-            myPanel.add(Box.createVerticalStrut(2)); // a spacer
             myPanel.add(nparaText[i]);
+            nparaLabel[i].setFont(new Font("微软雅黑", Font.PLAIN, 12));
+            myPanel.add(Box.createVerticalStrut(2)); // a spacer
         }
 
         int result = JOptionPane.showConfirmDialog(null, myPanel, "输入要插入的行的信息：", JOptionPane.OK_CANCEL_OPTION);
@@ -245,6 +246,11 @@ public class ClientManager extends JFrame implements ActionListener {
                 newRow += "'" + paras[i] + "'";
                 if (i < length - 1) {
                     newRow += ",";
+                }
+                if (i == 7) {
+                    if (paras[i].contains("@")){
+                        System.out.println("Err: email no at");
+                    }
                 }
             }
             return newRow;
@@ -325,7 +331,7 @@ public class ClientManager extends JFrame implements ActionListener {
                                                        int row,
                                                        int column) {
             Boolean b = (Boolean) value;
-            this.setSelected(b.booleanValue());
+            this.setSelected(b);
             return this;
         }
     }
@@ -339,7 +345,7 @@ public class ClientManager extends JFrame implements ActionListener {
             paraLabel[i] = new JLabel(labelName[i]);
             paraLabel[i].setPreferredSize(new Dimension(120, 25));
             paraLabel[i].setOpaque(true);
-            paraLabel[i].setFont(new Font("Dialog", 1, 16));
+            paraLabel[i].setFont(new Font("Dialog", Font.BOLD, 16));
             panelClient.add(paraLabel[i]);
             paraSymBox[i] = new JComboBox(syms);
             panelClient.add(paraSymBox[i]);
@@ -353,54 +359,54 @@ public class ClientManager extends JFrame implements ActionListener {
         condText = new JTextField(80);
         condLabel.setPreferredSize(new Dimension(100, 25));
         condLabel.setOpaque(true);
-        condLabel.setFont(new Font("Dialog", 1, 18));
+        condLabel.setFont(new Font("微软雅黑", Font.PLAIN, 18));
         panelClient.add(condLabel);
         condText.setOpaque(true);
         condText.setPreferredSize(new Dimension(800, 25));
         panelClient.add(condText);
         //功能
         JPanel funcPane = new JPanel();
-        funcPane.setPreferredSize(new Dimension(970, 50));
+        funcPane.setPreferredSize(new Dimension(1170, 50));
         funcPane.setLayout(new FlowLayout(FlowLayout.CENTER));
         funcPane.setOpaque(true);
         panelClient.add(funcPane);
         //添加
         insertBtn = new JButton("添加");
-        insertBtn.setPreferredSize(new Dimension(235, 40));
+        insertBtn.setPreferredSize(new Dimension(200, 40));
         insertBtn.setOpaque(true);
         insertBtn.addActionListener(this);
         funcPane.add(insertBtn);
-        insertBtn.setFont(new Font("Dialog", 1, 30));
+        insertBtn.setFont(new Font("微软雅黑", Font.PLAIN, 30));
         //删除
         deleteBtn = new JButton("删除");
-        deleteBtn.setPreferredSize(new Dimension(235, 40));
+        deleteBtn.setPreferredSize(new Dimension(200, 40));
         deleteBtn.setOpaque(true);
         deleteBtn.addActionListener(this);
         funcPane.add(deleteBtn);
-        deleteBtn.setFont(new Font("Dialog", 1, 30));
+        deleteBtn.setFont(new Font("微软雅黑", Font.PLAIN, 30));
         //修改
         updateBtn = new JButton("修改");
-        updateBtn.setPreferredSize(new Dimension(235, 40));
+        updateBtn.setPreferredSize(new Dimension(200, 40));
         updateBtn.setOpaque(true);
         updateBtn.addActionListener(this);
         funcPane.add(updateBtn);
-        updateBtn.setFont(new Font("Dialog", 1, 30));
+        updateBtn.setFont(new Font("微软雅黑", Font.PLAIN, 30));
         //查询
         searchBtn = new JButton("查询");
-        searchBtn.setPreferredSize(new Dimension(235, 40));
+        searchBtn.setPreferredSize(new Dimension(200, 40));
         searchBtn.setOpaque(true);
         searchBtn.addActionListener(this);
         funcPane.add(searchBtn);
-        searchBtn.setFont(new Font("Dialog", 1, 30));
+        searchBtn.setFont(new Font("微软雅黑", Font.PLAIN, 30));
         //结果表格
         resTable = new JTable();
         //resTable.setPreferredSize(new Dimension(500, 500));
         initTable(resTable, data, colName);
         resTable.setOpaque(true);
-        resTable.setFont(new Font("Dialog", 1, 18));
+        resTable.setFont(new Font("微软雅黑", Font.PLAIN, 15));
         JScrollPane resPane = new JScrollPane(resTable);
         resPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        resPane.setPreferredSize(new Dimension(970, 340));
+        resPane.setPreferredSize(new Dimension(1170, 340));
         panelClient.add(resPane);
     }
 

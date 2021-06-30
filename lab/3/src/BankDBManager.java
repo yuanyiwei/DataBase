@@ -22,7 +22,7 @@ public class BankDBManager extends JFrame implements ActionListener {
     private BusinessManager buMng;
 
     private String dbURL, port, sid, address;
-    private String dbDriver = "com.mysql.cj.jdbc";
+    private String dbDriver = "com.mysql.cj.jdbc.Driver";
     private String userName, password;
     protected Connection conn = null;
     protected ResultSet res = null;
@@ -106,7 +106,6 @@ public class BankDBManager extends JFrame implements ActionListener {
     public void loginFunc() {
         JTextField urlField = new JTextField(15);
         JTextField portField = new JTextField(15);
-//		JTextField sidField = new JTextField(15);
         JCheckBox usedeaultField = new JCheckBox("使用内置服务器", Boolean.TRUE);
         JTextField userField = new JTextField(15);
         JTextField passwdField = new JTextField(15);
@@ -116,13 +115,11 @@ public class BankDBManager extends JFrame implements ActionListener {
 
 
         myPanel.add(usedeaultField);
-        myPanel.add(new JLabel("DataBase URL:"));
+        myPanel.add(new JLabel("DataBase Address:"));
         myPanel.add(urlField);
-        myPanel.add(new JLabel("Port:"));
+        myPanel.add(Box.createVerticalStrut(2)); // a spacer
+        myPanel.add(new JLabel("DataBase Port:"));
         myPanel.add(portField);
-//		myPanel.add(Box.createVerticalStrut(2)); // a spacer
-//		myPanel.add(new JLabel("SID:"));
-//		myPanel.add(sidField);
         myPanel.add(Box.createVerticalStrut(2)); // a spacer
         myPanel.add(new JLabel("User Name:"));
         myPanel.add(userField);
@@ -141,7 +138,6 @@ public class BankDBManager extends JFrame implements ActionListener {
             } else {
                 address = urlField.getText();
                 port = portField.getText();
-//				sid = sidField.getText();
                 userName = userField.getText();
                 password = passwdField.getText();
             }
@@ -193,7 +189,7 @@ public class BankDBManager extends JFrame implements ActionListener {
 
     public void menuInit() {
         this.setJMenuBar(menuBar);    //添加菜单栏
-        menuBar.add(menuFile);      //添加 “文件” 菜单
+        menuBar.add(menuFile);
         login.addActionListener(this);
         menuFile.add(login);
         logout.addActionListener(this);
@@ -214,10 +210,10 @@ public class BankDBManager extends JFrame implements ActionListener {
         menuInit();
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//点X关闭窗口
-        setLocation(300, 200); //初始化时定位
-        setSize(1000, 650);
+        setLocation(100, 100); //初始化时定位
+        setSize(1200, 650);
         //setBackground(deepGrey);
-        setResizable(true);   //禁止拖曳改变窗口大小
+        setResizable(false);   //禁止拖曳改变窗口大小
         setVisible(true);  //显示窗口
     }
 

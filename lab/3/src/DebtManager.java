@@ -87,21 +87,21 @@ public class DebtManager extends JFrame implements ActionListener {
 					continue;
 				}
 				if (resTable.getValueAt(i, 0).equals(true)) {
-					asql = "Delete From 支付情况  Where 贷款号 = '" + resTable.getValueAt(i, 1) + "'";
+					asql = "Delete From 支付情况 Where 贷款号 = '" + resTable.getValueAt(i, 1) + "'";
 					try {
 						exeSQL(conn, asql, DELETE);
 					} catch (SQLException e1) {
 						e1.printStackTrace();
 						showError(e1.getMessage());
 					}
-					asql = "Delete From 拥有贷款  Where 贷款号 = '" + resTable.getValueAt(i, 1) + "'";
+					asql = "Delete From 拥有贷款 Where 贷款号 = '" + resTable.getValueAt(i, 1) + "'";
 					try {
 						exeSQL(conn, asql, DELETE);
 					} catch (SQLException e1) {
 						e1.printStackTrace();
 						showError(e1.getMessage());
 					}
-					asql = "Delete From " + dbName + "  Where 贷款号 = '" + resTable.getValueAt(i, 1) + "'";
+					asql = "Delete From " + dbName + " Where 贷款号 = '" + resTable.getValueAt(i, 1) + "'";
 					try {
 						exeSQL(conn, asql, DELETE);
 					} catch (SQLException e1) {
@@ -135,12 +135,10 @@ public class DebtManager extends JFrame implements ActionListener {
 			}
 			String asql;
 			if (cond.equals("")) {
-				asql = "select * from " + dbName+ ", 拥有贷款 where " + dbName
-						+ ".贷款号 = 拥有贷款.贷款号";
+				asql = "select * from " + dbName+ ", 拥有贷款 where " + dbName + ".贷款号 = 拥有贷款.贷款号";
 			}
 			else {
-				asql = "select * from " + dbName + " where " + ", 拥有贷款" + " where "
-						+ dbName + ".贷款号 = 拥有贷款.贷款号 and " + cond;
+				asql = "select * from " + dbName + " where " + ", 拥有贷款" + " where " + dbName + ".贷款号 = 拥有贷款.贷款号 and " + cond;
 			}
 			try {
 				ResultSet aRSet = exeSQL(conn, asql, SEARCH);
@@ -431,7 +429,7 @@ public class DebtManager extends JFrame implements ActionListener {
                 int row,   
                 int column ) {   
             Boolean b = (Boolean) value;   
-            this.setSelected(b.booleanValue());   
+            this.setSelected(b);
             return this;   
         }   
 	} 
@@ -478,54 +476,54 @@ public class DebtManager extends JFrame implements ActionListener {
 		condText = new JTextField(80);
 		condLabel.setPreferredSize(new Dimension(100, 25));
 		condLabel.setOpaque(true);
-		condLabel.setFont(new Font("Dialog", 1, 18));
+		condLabel.setFont(new Font("微软雅黑", Font.PLAIN, 18));
 		panelDebt.add(condLabel);
 		condText.setOpaque(true);
 		condText.setPreferredSize(new Dimension(800, 25));
 		panelDebt.add(condText);
 		//功能
 		JPanel funcPane = new JPanel();
-		funcPane.setPreferredSize(new Dimension(970, 50));
+		funcPane.setPreferredSize(new Dimension(1170, 50));
 		funcPane.setLayout(new FlowLayout(FlowLayout.CENTER));
 		funcPane.setOpaque(true);
 		panelDebt.add(funcPane);
 		//添加
 		insertBtn = new JButton("添加");
-		insertBtn.setPreferredSize(new Dimension(235, 40));
+		insertBtn.setPreferredSize(new Dimension(200, 40));
 		insertBtn.setOpaque(true);
 		insertBtn.addActionListener(this);
 		funcPane.add(insertBtn);
-		insertBtn.setFont(new Font("Dialog", 1, 30));
+		insertBtn.setFont(new Font("微软雅黑", Font.PLAIN, 30));
 		//删除
 		deleteBtn = new JButton("删除");
-		deleteBtn.setPreferredSize(new Dimension(235, 40));
+		deleteBtn.setPreferredSize(new Dimension(200, 40));
 		deleteBtn.setOpaque(true);
 		deleteBtn.addActionListener(this);
 		funcPane.add(deleteBtn);
-		deleteBtn.setFont(new Font("Dialog", 1, 30));
-		//查询
-		searchBtn = new JButton("查询");
-		searchBtn.setPreferredSize(new Dimension(235, 40));
-		searchBtn.setOpaque(true);
-		searchBtn.addActionListener(this);
-		funcPane.add(searchBtn);
-		searchBtn.setFont(new Font("Dialog", 1, 30));
+		deleteBtn.setFont(new Font("微软雅黑", Font.PLAIN, 30));
 		//发放贷款
 		sendBtn = new JButton("发放");
-		sendBtn.setPreferredSize(new Dimension(235, 40));
+		sendBtn.setPreferredSize(new Dimension(200, 40));
 		sendBtn.setOpaque(true);
 		sendBtn.addActionListener(this);
 		funcPane.add(sendBtn);
-		sendBtn.setFont(new Font("Dialog", 1, 30));
+		sendBtn.setFont(new Font("微软雅黑", Font.PLAIN, 30));
+		//查询
+		searchBtn = new JButton("查询");
+		searchBtn.setPreferredSize(new Dimension(200, 40));
+		searchBtn.setOpaque(true);
+		searchBtn.addActionListener(this);
+		funcPane.add(searchBtn);
+		searchBtn.setFont(new Font("微软雅黑", Font.PLAIN, 30));
 		//结果表格
 		resTable = new JTable();
 		//resTable.setPreferredSize(new Dimension(500, 500));
 		initTable(resTable, data, colName);
 		resTable.setOpaque(true);
-		resTable.setFont(new Font("Dialog", 1, 18));
+		resTable.setFont(new Font("微软雅黑", Font.PLAIN, 15));
 		JScrollPane resPane = new JScrollPane(resTable);
 		resPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		resPane.setPreferredSize(new Dimension(970, 400));
+		resPane.setPreferredSize(new Dimension(1170, 400));
 		panelDebt.add(resPane);
 	}
 

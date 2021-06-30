@@ -402,47 +402,47 @@ public class StaffManager extends JFrame implements ActionListener {
         panelStaff.add(condText);
         //功能
         JPanel funcPane = new JPanel();
-        funcPane.setPreferredSize(new Dimension(970, 50));
+        funcPane.setPreferredSize(new Dimension(1170, 50));
         funcPane.setLayout(new FlowLayout(FlowLayout.CENTER));
         funcPane.setOpaque(true);
         panelStaff.add(funcPane);
         //添加
         insertBtn = new JButton("添加");
-        insertBtn.setPreferredSize(new Dimension(235, 40));
+        insertBtn.setPreferredSize(new Dimension(200, 40));
         insertBtn.setOpaque(true);
         insertBtn.addActionListener(this);
         funcPane.add(insertBtn);
-        insertBtn.setFont(new Font("Dialog", 1, 30));
+        insertBtn.setFont(new Font("微软雅黑", Font.PLAIN, 30));
         //删除
         deleteBtn = new JButton("删除");
-        deleteBtn.setPreferredSize(new Dimension(235, 40));
+        deleteBtn.setPreferredSize(new Dimension(200, 40));
         deleteBtn.setOpaque(true);
         deleteBtn.addActionListener(this);
         funcPane.add(deleteBtn);
-        deleteBtn.setFont(new Font("Dialog", 1, 30));
+        deleteBtn.setFont(new Font("微软雅黑", Font.PLAIN, 30));
         //修改
         updateBtn = new JButton("修改");
-        updateBtn.setPreferredSize(new Dimension(235, 40));
+        updateBtn.setPreferredSize(new Dimension(200, 40));
         updateBtn.setOpaque(true);
         updateBtn.addActionListener(this);
         funcPane.add(updateBtn);
-        updateBtn.setFont(new Font("Dialog", 1, 30));
+        updateBtn.setFont(new Font("微软雅黑", Font.PLAIN, 30));
         //查询
         searchBtn = new JButton("查询");
-        searchBtn.setPreferredSize(new Dimension(235, 40));
+        searchBtn.setPreferredSize(new Dimension(200, 40));
         searchBtn.setOpaque(true);
         searchBtn.addActionListener(this);
         funcPane.add(searchBtn);
-        searchBtn.setFont(new Font("Dialog", 1, 30));
+        searchBtn.setFont(new Font("微软雅黑", Font.PLAIN, 30));
         //结果表格
         resTable = new JTable();
         //resTable.setPreferredSize(new Dimension(500, 500));
         initTable(resTable, data, Arrays.copyOfRange(colName, 0, labelNum + 1));
         resTable.setOpaque(true);
-        resTable.setFont(new Font("Dialog", 1, 18));
+        resTable.setFont(new Font("微软雅黑", Font.PLAIN, 15));
         JScrollPane resPane = new JScrollPane(resTable);
         resPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        resPane.setPreferredSize(new Dimension(970, 370));
+        resPane.setPreferredSize(new Dimension(1170, 370));
         panelStaff.add(resPane);
     }
 
