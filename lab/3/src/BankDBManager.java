@@ -22,7 +22,7 @@ public class BankDBManager extends JFrame implements ActionListener {
     private BusinessManager buMng;
 
     private String dbURL, port, sid, address;
-    private String dbDriver = "com.mysql.cj.jdbc.Driver";
+    private String dbDriver = "com.mysql.jdbc.Driver";
     private String userName, password;
     protected Connection conn = null;
     protected ResultSet res = null;
@@ -131,8 +131,8 @@ public class BankDBManager extends JFrame implements ActionListener {
         if (result == JOptionPane.OK_OPTION) {
 
             if (usedeaultField.isSelected()) {
-                port = "33060";
-                address = "192.168.174.146";
+                port = "52000";
+                address = "206.yyw.moe";
                 userName = "root";
                 password = "totoroyyw";
             } else {
