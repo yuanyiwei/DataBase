@@ -129,7 +129,6 @@ public class BankDBManager extends JFrame implements ActionListener {
 
         int result = JOptionPane.showConfirmDialog(null, myPanel, "Log In", JOptionPane.OK_CANCEL_OPTION);
         if (result == JOptionPane.OK_OPTION) {
-
             if (usedeaultField.isSelected()) {
                 port = "52000";
                 address = "206.yyw.moe";
@@ -141,7 +140,6 @@ public class BankDBManager extends JFrame implements ActionListener {
                 userName = userField.getText();
                 password = passwdField.getText();
             }
-//			sid = "orcl"; // ?
             dbURL = "jdbc:mysql://" + address + ":" + port + "/lab3?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
             System.out.println(dbURL);
         }
