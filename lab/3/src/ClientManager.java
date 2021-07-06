@@ -76,8 +76,7 @@ public class ClientManager extends JFrame implements ActionListener {
                         showError(errMsgs[1]);
                         continue;
                     }
-                    asql = "Delete From " + dbName + "  Where 身份证号 = '" + clientID + "'";
-                    System.out.println(asql);
+                    asql = "Delete From " + dbName + " Where 身份证号 = '" + clientID + "'";
                     try {
                         exeSQL(conn, asql, DELETE);
                         System.out.println(asql);
@@ -130,7 +129,7 @@ public class ClientManager extends JFrame implements ActionListener {
                     if (!cond.toString().equals("")) {
                         cond.append(" and ");
                     }
-                    cond.append(colName[i + 1]).append(syms[paraSymBox[i].getSelectedIndex()]).append(" '").append(paraText[i].getText()).append("'");
+                    cond.append(colName[i + 1]).append(" ").append(syms[paraSymBox[i].getSelectedIndex()]).append(" '").append(paraText[i].getText()).append("'");
                 }
             }
             if (!condText.getText().equals("")) {
@@ -248,8 +247,10 @@ public class ClientManager extends JFrame implements ActionListener {
                     newRow += ",";
                 }
                 if (i == 7) {
-                    if (paras[i].contains("@")){
-                        System.out.println("Err: email no at");
+                    if (!paras[i].contains("@")){
+                        System.out.println("Err: email no @");
+                        showError("Err: email no @");
+                        return null;
                     }
                 }
             }

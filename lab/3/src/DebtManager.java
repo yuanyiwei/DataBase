@@ -267,7 +267,7 @@ public class DebtManager extends JFrame implements ActionListener {
         } else if (selCnt > 1) {
             showError(errMsgs[2]);
         } else {
-            String deltID = resTable.getValueAt(selNum, 1).toString();
+            String debtID = resTable.getValueAt(selNum, 1).toString();
             JTextField nDateField = new JTextField(15);
             JTextField nMoneyField = new JTextField(15);
             String asql = null, date = null, money = null;
@@ -306,11 +306,18 @@ public class DebtManager extends JFrame implements ActionListener {
                 money = nMoneyField.getText();
             }
             if (date != null && money != null) {
-                asql = "insert into 支付情况 (贷款号, 日期, 金额) Values('" + deltID + "', STR_TO_DATE('" + date + "', '%Y/%m/%d'), '" + money + "')";
+                if (date.replace('/', '-').compareTo(resTable.getValueAt(selNum, 4).toString()) < 0) {
+                    System.out.println("Err payment time");
+                    showError("Err payment time");
+                    return;
+                }
+                asql = "insert into 支付情况 (贷款号, 日期, 金额) Values('" + debtID + "', STR_TO_DATE('" + date + "', '%Y/%m/%d'), '" + money + "')";
                 String moneysql = "select sum(金额) from 支付情况 where 支付情况.贷款号 = '" + resTable.getValueAt(selNum, 1) + "'";
                 ResultSet moneyres;
                 try {
-                    exeSQL(conn, asql, SEARCH);
+                    System.out.println("asql: " + asql);
+                    exeSQL(conn, asql, INSERT);
+                    System.out.println("moneysql: " + moneysql);
                     moneyres = exeSQL(conn, moneysql, SEARCH);
                     moneyres.next();
                     double sendmoney = moneyres.getDouble(1);
