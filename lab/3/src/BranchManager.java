@@ -69,7 +69,6 @@ public class BranchManager extends JFrame implements ActionListener {
                     System.out.println(asql);
                     try {
                         exeSQL(conn, asql, DELETE);
-                        System.out.println(asql);
                     } catch (SQLException e1) {
                         e1.printStackTrace();
                         showError(e1.getMessage());
@@ -90,7 +89,6 @@ public class BranchManager extends JFrame implements ActionListener {
                     System.out.println(asql);
                     try {
                         exeSQL(conn, asql, UPDATE);
-                        System.out.println(asql);
                     } catch (SQLException e1) {
                         e1.printStackTrace();
                         showError(e1.getMessage());
@@ -209,7 +207,6 @@ public class BranchManager extends JFrame implements ActionListener {
                 res2++;
             }
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
             showError(e.getMessage());
             return false;
@@ -237,6 +234,7 @@ public class BranchManager extends JFrame implements ActionListener {
     }
 
     protected ResultSet exeSQL(Connection conn, String sql, int mode) throws SQLException {
+        System.out.println(sql);
         if (conn == null) {
             showError(0);
         }
@@ -298,29 +296,29 @@ public class BranchManager extends JFrame implements ActionListener {
         moneyText = new JTextField(10);
         insertBtn = new JButton("添加");
         condLabel = new JLabel("其他条件：");
-        condText = new JTextField(80);
+        condText = new JTextField(30);
         space = new JLabel("");
         nameLabel.setPreferredSize(new Dimension(100, 25));
         nameLabel.setOpaque(true);
-        nameLabel.setFont(new Font("Dialog", 1, 18));
+        nameLabel.setFont(new Font("Dialog", Font.BOLD, 18));
         panelBranch.add(nameLabel);
         nameText.setPreferredSize(new Dimension(400, 25));
         nameText.setOpaque(true);
         panelBranch.add(nameText);
         moneyLabel.setPreferredSize(new Dimension(100, 25));
         moneyLabel.setOpaque(true);
-        moneyLabel.setFont(new Font("Dialog", 1, 18));
+        moneyLabel.setFont(new Font("Dialog", Font.BOLD, 18));
         panelBranch.add(moneyLabel);
         moneySymBox = new JComboBox(syms);
         panelBranch.add(moneySymBox);
         moneyText.setPreferredSize(new Dimension(400, 25));
         moneyText.setOpaque(true);
         panelBranch.add(moneyText);
-        space.setPreferredSize(new Dimension(400, 25));
+        space.setPreferredSize(new Dimension(100, 25));
         panelBranch.add(space);
         condLabel.setPreferredSize(new Dimension(100, 25));
         condLabel.setOpaque(true);
-        condLabel.setFont(new Font("Dialog", 1, 18));
+        condLabel.setFont(new Font("Dialog", Font.BOLD, 18));
         panelBranch.add(condLabel);
         condText.setOpaque(true);
         condText.setPreferredSize(new Dimension(800, 25));

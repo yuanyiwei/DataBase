@@ -13,22 +13,22 @@ public class BankDBManager extends JFrame implements ActionListener {
     private JMenuItem login = new JMenuItem("登陆");
     private JMenuItem logout = new JMenuItem("登出");
 
-    private JPanel panelStaff, panelClient, panelAccount, panelDebt, panelBusiness;
-    private BranchManager brMng;
-    private StaffManager stMng;
+//    private BranchManager brMng;
+//    private StaffManager stMng;
     private ClientManager clMng;
     private AccountManager acMng;
     private DebtManager deMng;
     private BusinessManager buMng;
 
-    private String dbURL, port, sid, address;
-    private String dbDriver = "com.mysql.jdbc.Driver";
+    private String dbURL, port, address;
+    private String dbDriver = "com.mysql.cj.jdbc.Driver";
     private String userName, password;
     protected Connection conn = null;
     protected ResultSet res = null;
     protected PreparedStatement pstmt = null;
 
-    private String[] title = {"支行管理", "员工管理", "客户管理", "账户管理", "贷款管理", "业务统计"};
+//    private String[] title = {"支行管理", "员工管理", "客户管理", "账户管理", "贷款管理", "业务统计"};
+    private String[] title = {"客户管理", "账户管理", "贷款管理", "业务统计"};
 
     public BankDBManager() {
         super("Bank Batabase Manager");
@@ -49,8 +49,8 @@ public class BankDBManager extends JFrame implements ActionListener {
     }
 
     public void tabInit() {
-        tp.add(brMng.panelBranch);
-        tp.add(stMng.panelStaff);
+//        tp.add(brMng.panelBranch);
+//        tp.add(stMng.panelStaff);
         tp.add(clMng.panelClient);
         tp.add(acMng.panelAccount);
         tp.add(deMng.panelDebt);
@@ -65,13 +65,15 @@ public class BankDBManager extends JFrame implements ActionListener {
         try {
             Class.forName(dbDriver);
         } catch (ClassNotFoundException e) {
-            //TODO: handle exception
+            showError(e.getMessage());
+            System.out.println(e);
             e.printStackTrace();
         }
         try {
             conn = DriverManager.getConnection(dbURL, userName, password);
         } catch (SQLException e) {
-            //TODO: handle exception
+            showError(e.getMessage());
+            System.out.println(e);
             e.printStackTrace();
         }
     }
@@ -81,7 +83,8 @@ public class BankDBManager extends JFrame implements ActionListener {
             try {
                 res.close();
             } catch (SQLException e) {
-                //TODO: handle exception
+                showError(e.getMessage());
+                System.out.println(e);
                 e.printStackTrace();
             }
         }
@@ -89,7 +92,8 @@ public class BankDBManager extends JFrame implements ActionListener {
             try {
                 pstmt.close();
             } catch (SQLException e) {
-                //TODO: handle exception
+                showError(e.getMessage());
+                System.out.println(e);
                 e.printStackTrace();
             }
         }
@@ -97,7 +101,8 @@ public class BankDBManager extends JFrame implements ActionListener {
             try {
                 conn.close();
             } catch (SQLException e) {
-                //TODO: handle exception
+                showError(e.getMessage());
+                System.out.println(e);
                 e.printStackTrace();
             }
         }
@@ -148,21 +153,22 @@ public class BankDBManager extends JFrame implements ActionListener {
                 getConnection();
                 login.setEnabled(false);
                 logout.setEnabled(true);
-                brMng.setConn(conn);
-                stMng.setConn(conn);
+//                brMng.setConn(conn);
+//                stMng.setConn(conn);
                 clMng.setConn(conn);
                 acMng.setConn(conn);
                 deMng.setConn(conn);
                 buMng.setConn(conn);
-                brMng.pBrInit();
-                stMng.pStInit();
+//                brMng.pBrInit();
+//                stMng.pStInit();
                 clMng.pClInit();
                 acMng.pAcInit();
                 deMng.pDeInit();
                 buMng.pBuInit();
             } catch (SQLException sqle) {
-                //TODO: handle exception
-                JOptionPane.showMessageDialog(null, "连接失败！\n请重试！", "错误！", JOptionPane.ERROR_MESSAGE);
+                showError("连接失败！\n请重试！");
+                System.out.println("连接失败！\n请重试！");
+                sqle.printStackTrace();
             }
         }
     }
@@ -173,15 +179,16 @@ public class BankDBManager extends JFrame implements ActionListener {
             JOptionPane.showMessageDialog(null, "登出成功！", "成功！", JOptionPane.PLAIN_MESSAGE);
             login.setEnabled(true);
             logout.setEnabled(false);
-            brMng.panelBranch.removeAll();
-            stMng.panelStaff.removeAll();
+//            brMng.panelBranch.removeAll();
+//            stMng.panelStaff.removeAll();
             clMng.panelClient.removeAll();
             acMng.panelAccount.removeAll();
             deMng.panelDebt.removeAll();
             buMng.panelBusiness.removeAll();
-        } catch (SQLException e) {
-            //TODO: handle exception
-            JOptionPane.showMessageDialog(null, "登出失败！\n请重试！", "错误！", JOptionPane.ERROR_MESSAGE);
+        } catch (SQLException sqle) {
+            showError("登出失败！\n请重试！");
+            System.out.println("登出失败！\n请重试！");
+            sqle.printStackTrace();
         }
     }
 
@@ -198,8 +205,8 @@ public class BankDBManager extends JFrame implements ActionListener {
     }
 
     public void draw() {
-        brMng = new BranchManager();
-        stMng = new StaffManager();
+//        brMng = new BranchManager();
+//        stMng = new StaffManager();
         clMng = new ClientManager();
         acMng = new AccountManager();
         deMng = new DebtManager();
@@ -213,6 +220,10 @@ public class BankDBManager extends JFrame implements ActionListener {
         //setBackground(deepGrey);
         setResizable(false);   //禁止拖曳改变窗口大小
         setVisible(true);  //显示窗口
+    }
+
+    public void showError(String msg) {
+        JOptionPane.showMessageDialog(null, msg, "错误！", JOptionPane.ERROR_MESSAGE);
     }
 
     public static void main(String args[]) {

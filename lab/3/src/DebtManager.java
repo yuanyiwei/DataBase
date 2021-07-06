@@ -215,7 +215,6 @@ public class DebtManager extends JFrame implements ActionListener {
         }
         nparaText[3].setText("yyyy/mm/dd");
         nparaText[3].addFocusListener(new FocusListener() {
-
             @Override
             public void focusGained(FocusEvent e) {
                 // TODO Auto-generated method stub
@@ -231,7 +230,6 @@ public class DebtManager extends JFrame implements ActionListener {
                     nparaText[3].setText("yyyy/mm/dd");
                 }
             }
-
         });
 
         int result = JOptionPane.showConfirmDialog(null, myPanel, "输入要插入的行的信息：", JOptionPane.OK_CANCEL_OPTION);
@@ -315,9 +313,7 @@ public class DebtManager extends JFrame implements ActionListener {
                 String moneysql = "select sum(金额) from 支付情况 where 支付情况.贷款号 = '" + resTable.getValueAt(selNum, 1) + "'";
                 ResultSet moneyres;
                 try {
-                    System.out.println("asql: " + asql);
                     exeSQL(conn, asql, INSERT);
-                    System.out.println("moneysql: " + moneysql);
                     moneyres = exeSQL(conn, moneysql, SEARCH);
                     moneyres.next();
                     double sendmoney = moneyres.getDouble(1);
@@ -383,7 +379,8 @@ public class DebtManager extends JFrame implements ActionListener {
 
     private void initTable(JTable table, Object[][] data, String[] colName) {
         DefaultTableModel dtm = new DefaultTableModel(colName, 0) {
-            public boolean isCellEditable(int row, int col) {//设置账户号不允许修改
+            public boolean isCellEditable(int row, int col) {
+                //设置账户号不允许修改
                 if (col == 1 || col == length) {
                     return false;
                 } else {
@@ -437,7 +434,7 @@ public class DebtManager extends JFrame implements ActionListener {
             paraLabel[i] = new JLabel(labelName[i]);
             paraLabel[i].setPreferredSize(new Dimension(120, 25));
             paraLabel[i].setOpaque(true);
-            paraLabel[i].setFont(new Font("Dialog", 1, 16));
+            paraLabel[i].setFont(new Font("Dialog", Font.BOLD, 16));
             panelDebt.add(paraLabel[i]);
             paraSymBox[i] = new JComboBox(syms);
             panelDebt.add(paraSymBox[i]);
@@ -467,13 +464,13 @@ public class DebtManager extends JFrame implements ActionListener {
 
         });
         condLabel = new JLabel("其他条件：");
-        condText = new JTextField(80);
+        condText = new JTextField(40);
         condLabel.setPreferredSize(new Dimension(100, 25));
         condLabel.setOpaque(true);
-        condLabel.setFont(new Font("微软雅黑", Font.PLAIN, 18));
+        condLabel.setFont(new Font("Dialog", Font.BOLD, 18));
         panelDebt.add(condLabel);
         condText.setOpaque(true);
-        condText.setPreferredSize(new Dimension(800, 25));
+        condText.setPreferredSize(new Dimension(200, 25));
         panelDebt.add(condText);
         //功能
         JPanel funcPane = new JPanel();

@@ -91,6 +91,7 @@ public class BusinessManager extends JFrame implements ActionListener {
                     }
                     // TODO: err sql
                     ResultSet aRSet = exeSQL(conn, asql, SEARCH);
+
                     while (aRSet != null && aRSet.next()) {
                         Object[] line = new Object[labelNum];
                         line[0] = timeInt[i];
@@ -338,7 +339,7 @@ public class BusinessManager extends JFrame implements ActionListener {
         branchLabel = new JLabel("支行：");
         branchLabel.setPreferredSize(new Dimension(70, 25));
         branchLabel.setOpaque(true);
-        branchLabel.setFont(new Font("Dialog", 1, 18));
+        branchLabel.setFont(new Font("Dialog", Font.BOLD, 18));
         panelBusiness.add(branchLabel);
         branchBox = new JComboBox(Arrays.copyOfRange(branchStr, 0, branchStr.length));
         if (branchStr.length > 0) {
@@ -351,19 +352,19 @@ public class BusinessManager extends JFrame implements ActionListener {
         searchBtn = new JButton("查询");
         searchBtn.setPreferredSize(new Dimension(80, 25));
         searchBtn.setOpaque(true);
-        searchBtn.setFont(new Font("Dialog", 1, 18));
+        searchBtn.setFont(new Font("微软雅黑", Font.PLAIN, 18));
         searchBtn.addActionListener(this);
         panelBusiness.add(searchBtn);
         plotMoneyBtn = new JButton("业务金额曲线");
         plotMoneyBtn.setPreferredSize(new Dimension(150, 25));
         plotMoneyBtn.setOpaque(true);
-        plotMoneyBtn.setFont(new Font("Dialog", 1, 18));
+        plotMoneyBtn.setFont(new Font("微软雅黑", Font.PLAIN, 18));
         plotMoneyBtn.addActionListener(this);
         panelBusiness.add(plotMoneyBtn);
         plotClientBtn = new JButton("客户数曲线");
         plotClientBtn.setPreferredSize(new Dimension(140, 25));
         plotClientBtn.setOpaque(true);
-        plotClientBtn.setFont(new Font("Dialog", 1, 18));
+        plotClientBtn.setFont(new Font("微软雅黑", Font.PLAIN, 18));
         plotClientBtn.addActionListener(this);
         panelBusiness.add(plotClientBtn);
         //结果表格
@@ -371,7 +372,7 @@ public class BusinessManager extends JFrame implements ActionListener {
         //resTable.setPreferredSize(new Dimension(500, 500));
         setTable(resTable, data, colName);
         resTable.setOpaque(true);
-        resTable.setFont(new Font("Dialog", 1, 18));
+        resTable.setFont(new Font("Dialog", Font.BOLD, 18));
         JScrollPane resPane = new JScrollPane(resTable);
         resPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         resPane.setPreferredSize(new Dimension(1170, 515));

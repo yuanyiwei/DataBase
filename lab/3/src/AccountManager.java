@@ -56,6 +56,7 @@ public class AccountManager extends JFrame implements ActionListener {
     public AccountManager() {
         panelAccount = new JPanel();
     }
+
     // TODO: what is 账户 and 储蓄账户 储蓄账户里不该那么多属性
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == insertBtn) {
@@ -243,14 +244,13 @@ public class AccountManager extends JFrame implements ActionListener {
             nparaLabel[i] = new JLabel(labelName[catSel][i]);
             nparaText[i] = new JTextField(20);
             myPanel.add(nparaLabel[i]);
-            myPanel.add(Box.createVerticalStrut(2)); // a spacer
+            myPanel.add(Box.createVerticalStrut(2));
             myPanel.add(nparaText[i]);
         }
         nparaText[1].setText(dbName[catSel]);
         nparaText[1].setEditable(false);
         nparaText[3].setText("yyyy/mm/dd");
         nparaText[3].addFocusListener(new FocusListener() {
-
             @Override
             public void focusGained(FocusEvent e) {
                 // TODO Auto-generated method stub
@@ -266,11 +266,9 @@ public class AccountManager extends JFrame implements ActionListener {
                     nparaText[3].setText("yyyy/mm/dd");
                 }
             }
-
         });
         nparaText[4].setText("yyyy/mm/dd");
         nparaText[4].addFocusListener(new FocusListener() {
-
             @Override
             public void focusGained(FocusEvent e) {
                 // TODO Auto-generated method stub
@@ -286,7 +284,6 @@ public class AccountManager extends JFrame implements ActionListener {
                     nparaText[4].setText("yyyy/mm/dd");
                 }
             }
-
         });
 
         int result = JOptionPane.showConfirmDialog(null, myPanel, "输入要插入的行的信息：", JOptionPane.OK_CANCEL_OPTION);
@@ -364,7 +361,8 @@ public class AccountManager extends JFrame implements ActionListener {
 
     private void initTable(JTable table, Object[][] data, String[] colName) {
         DefaultTableModel dtm = new DefaultTableModel(colName, 0) {
-            public boolean isCellEditable(int row, int col) {//设置账户号不允许修改
+            public boolean isCellEditable(int row, int col) {
+                //设置账户号不允许修改
                 if (col == 1 || col == 2 || col == length - 1 || col == length) {
                     return false;
                 } else {
@@ -372,8 +370,8 @@ public class AccountManager extends JFrame implements ActionListener {
                 }
             }
         };
-        for (int i = 0; i < data.length; i++) {
-            dtm.addRow(data[i]);
+        for (Object[] datum : data) {
+            dtm.addRow(datum);
         }
 
         table.setModel(dtm);
@@ -404,7 +402,7 @@ public class AccountManager extends JFrame implements ActionListener {
                                                        int row,
                                                        int column) {
             Boolean b = (Boolean) value;
-            this.setSelected(b.booleanValue());
+            this.setSelected(b);
             return this;
         }
     }
@@ -415,7 +413,7 @@ public class AccountManager extends JFrame implements ActionListener {
         catLabel = new JLabel(catStr);
         catLabel.setPreferredSize(new Dimension(100, 25));
         catLabel.setOpaque(true);
-        catLabel.setFont(new Font("Dialog", 1, 18));
+        catLabel.setFont(new Font("Dialog", Font.BOLD, 16));
         catBox = new JComboBox(Arrays.copyOfRange(dbName, 0, dbName.length));
         catBox.setSelectedIndex(catSel);
         catBox.addItemListener(e -> {
@@ -427,16 +425,16 @@ public class AccountManager extends JFrame implements ActionListener {
         panelAccount.add(catLabel);
         panelAccount.add(catBox);
         space = new JLabel("");
-        space.setPreferredSize(new Dimension(700, 25));
+        space.setPreferredSize(new Dimension(100, 25));
         panelAccount.add(space);
         paraLabel = new JLabel[length];
         paraText = new JTextField[length];
         paraSymBox = new JComboBox[length];
         for (int i = 0; i < length; i++) {
             paraLabel[i] = new JLabel(labelName[catSel][i]);
-            paraLabel[i].setPreferredSize(new Dimension(120, 25));
+            paraLabel[i].setPreferredSize(new Dimension(110, 25));
             paraLabel[i].setOpaque(true);
-            paraLabel[i].setFont(new Font("Dialog", 1, 16));
+            paraLabel[i].setFont(new Font("Dialog", Font.BOLD, 16));
             panelAccount.add(paraLabel[i]);
             paraSymBox[i] = new JComboBox(syms);
             panelAccount.add(paraSymBox[i]);
@@ -486,13 +484,13 @@ public class AccountManager extends JFrame implements ActionListener {
 
         });
         condLabel = new JLabel("其他条件：");
-        condText = new JTextField(80);
+        condText = new JTextField(40);
         condLabel.setPreferredSize(new Dimension(100, 25));
         condLabel.setOpaque(true);
-        condLabel.setFont(new Font("Dialog", 1, 18));
+        condLabel.setFont(new Font("Dialog", Font.BOLD, 18));
         panelAccount.add(condLabel);
         condText.setOpaque(true);
-        condText.setPreferredSize(new Dimension(800, 25));
+        condText.setPreferredSize(new Dimension(200, 25));
         panelAccount.add(condText);
         //功能
         JPanel funcPane = new JPanel();

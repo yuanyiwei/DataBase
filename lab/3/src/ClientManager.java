@@ -79,7 +79,6 @@ public class ClientManager extends JFrame implements ActionListener {
                     asql = "Delete From " + dbName + " Where 身份证号 = '" + clientID + "'";
                     try {
                         exeSQL(conn, asql, DELETE);
-                        System.out.println(asql);
                     } catch (SQLException e1) {
                         e1.printStackTrace();
                         showError(e1.getMessage());
@@ -113,7 +112,6 @@ public class ClientManager extends JFrame implements ActionListener {
                     System.out.println(asql);
                     try {
                         exeSQL(conn, asql, DELETE);
-                        System.out.println(i + asql);
                     } catch (SQLException e1) {
                         e1.printStackTrace();
                         showError(e1.getMessage());
@@ -276,6 +274,7 @@ public class ClientManager extends JFrame implements ActionListener {
     }
 
     protected ResultSet exeSQL(Connection conn, String sql, int mode) throws SQLException {
+        System.out.println(sql);
         if (conn == null) {
             showError(0);
         }
@@ -350,20 +349,20 @@ public class ClientManager extends JFrame implements ActionListener {
             panelClient.add(paraLabel[i]);
             paraSymBox[i] = new JComboBox(syms);
             panelClient.add(paraSymBox[i]);
-            paraText[i] = new JTextField(10);
+            paraText[i] = new JTextField(17);
             paraText[i].setPreferredSize(new Dimension(100, 25));
             paraText[i].setOpaque(true);
             panelClient.add(paraText[i]);
         }
-        paraLabel[2].setPreferredSize(new Dimension(160, 25));
+        paraLabel[1].setPreferredSize(new Dimension(160, 25));
         condLabel = new JLabel("其他条件：");
-        condText = new JTextField(80);
+        condText = new JTextField(40);
         condLabel.setPreferredSize(new Dimension(100, 25));
         condLabel.setOpaque(true);
-        condLabel.setFont(new Font("微软雅黑", Font.PLAIN, 18));
+        condLabel.setFont(new Font("Dialog", Font.BOLD, 16));
         panelClient.add(condLabel);
         condText.setOpaque(true);
-        condText.setPreferredSize(new Dimension(800, 25));
+        condText.setPreferredSize(new Dimension(200, 25));
         panelClient.add(condText);
         //功能
         JPanel funcPane = new JPanel();
