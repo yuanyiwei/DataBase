@@ -13,8 +13,6 @@ public class BankDBManager extends JFrame implements ActionListener {
     private JMenuItem login = new JMenuItem("登陆");
     private JMenuItem logout = new JMenuItem("登出");
 
-//    private BranchManager brMng;
-//    private StaffManager stMng;
     private ClientManager clMng;
     private AccountManager acMng;
     private DebtManager deMng;
@@ -27,7 +25,6 @@ public class BankDBManager extends JFrame implements ActionListener {
     protected ResultSet res = null;
     protected PreparedStatement pstmt = null;
 
-//    private String[] title = {"支行管理", "员工管理", "客户管理", "账户管理", "贷款管理", "业务统计"};
     private String[] title = {"客户管理", "账户管理", "贷款管理", "业务统计"};
 
     public BankDBManager() {
@@ -122,13 +119,13 @@ public class BankDBManager extends JFrame implements ActionListener {
         myPanel.add(usedeaultField);
         myPanel.add(new JLabel("DataBase Address:"));
         myPanel.add(urlField);
-        myPanel.add(Box.createVerticalStrut(2)); // a spacer
+        myPanel.add(Box.createVerticalStrut(2));
         myPanel.add(new JLabel("DataBase Port:"));
         myPanel.add(portField);
-        myPanel.add(Box.createVerticalStrut(2)); // a spacer
+        myPanel.add(Box.createVerticalStrut(2));
         myPanel.add(new JLabel("User Name:"));
         myPanel.add(userField);
-        myPanel.add(Box.createVerticalStrut(2)); // a spacer
+        myPanel.add(Box.createVerticalStrut(2));
         myPanel.add(new JLabel("Password:"));
         myPanel.add(passwdField);
 
@@ -153,14 +150,10 @@ public class BankDBManager extends JFrame implements ActionListener {
                 getConnection();
                 login.setEnabled(false);
                 logout.setEnabled(true);
-//                brMng.setConn(conn);
-//                stMng.setConn(conn);
                 clMng.setConn(conn);
                 acMng.setConn(conn);
                 deMng.setConn(conn);
                 buMng.setConn(conn);
-//                brMng.pBrInit();
-//                stMng.pStInit();
                 clMng.pClInit();
                 acMng.pAcInit();
                 deMng.pDeInit();
@@ -179,8 +172,6 @@ public class BankDBManager extends JFrame implements ActionListener {
             JOptionPane.showMessageDialog(null, "登出成功！", "成功！", JOptionPane.PLAIN_MESSAGE);
             login.setEnabled(true);
             logout.setEnabled(false);
-//            brMng.panelBranch.removeAll();
-//            stMng.panelStaff.removeAll();
             clMng.panelClient.removeAll();
             acMng.panelAccount.removeAll();
             deMng.panelDebt.removeAll();
@@ -193,7 +184,7 @@ public class BankDBManager extends JFrame implements ActionListener {
     }
 
     public void menuInit() {
-        this.setJMenuBar(menuBar);    //添加菜单栏
+        this.setJMenuBar(menuBar);
         menuBar.add(menuFile);
         login.addActionListener(this);
         menuFile.add(login);
@@ -205,8 +196,6 @@ public class BankDBManager extends JFrame implements ActionListener {
     }
 
     public void draw() {
-//        brMng = new BranchManager();
-//        stMng = new StaffManager();
         clMng = new ClientManager();
         acMng = new AccountManager();
         deMng = new DebtManager();

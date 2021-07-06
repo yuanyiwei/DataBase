@@ -349,7 +349,7 @@ public class ClientManager extends JFrame implements ActionListener {
             panelClient.add(paraLabel[i]);
             paraSymBox[i] = new JComboBox(syms);
             panelClient.add(paraSymBox[i]);
-            paraText[i] = new JTextField(17);
+            paraText[i] = new JTextField(20);
             paraText[i].setPreferredSize(new Dimension(100, 25));
             paraText[i].setOpaque(true);
             panelClient.add(paraText[i]);

@@ -438,7 +438,7 @@ public class AccountManager extends JFrame implements ActionListener {
             panelAccount.add(paraLabel[i]);
             paraSymBox[i] = new JComboBox(syms);
             panelAccount.add(paraSymBox[i]);
-            paraText[i] = new JTextField(10);
+            paraText[i] = new JTextField(13);
             paraText[i].setPreferredSize(new Dimension(100, 25));
             paraText[i].setOpaque(true);
             panelAccount.add(paraText[i]);
