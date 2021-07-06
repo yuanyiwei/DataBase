@@ -62,7 +62,7 @@ public class AccountManager extends JFrame implements ActionListener {
         if (e.getSource() == insertBtn) {
             String[] info = insertInfo();
 
-            if (info[2] != null) {
+            if (info != null) {
                 String paraNames = "";
                 for (int i = 0; i < length - 4; i++) {
                     paraNames += colName[catSel][i + 1];
@@ -132,7 +132,6 @@ public class AccountManager extends JFrame implements ActionListener {
                 String cond = "";
                 String change = "";
                 for (int j = 0; j < colCnt - 1; j++) {
-//                    System.out.println("i:" + i + " j:" + j + colName[catSel][j + 1]);
                     if (j == 3 || j == 4) {
                         cond += colName[catSel][j + 1] + " = '" + oldTable[i][j + 1].toString().substring(0, 10) + "'";
                         change += colName[catSel][j + 1] + " = '" + resTable.getValueAt(i, j + 1).toString().substring(0, 10) + "'";
@@ -142,7 +141,13 @@ public class AccountManager extends JFrame implements ActionListener {
                         } else {
                             cond += colName[catSel][j + 1] + " = '" + oldTable[i][j + 1] + "' ";
                         }
-                        change += colName[catSel][j + 1] + " = '" + resTable.getValueAt(i, j + 1) + "' ";
+                        if (j == 2 && resTable.getValueAt(i, j + 1).toString().charAt(0) == '-') {
+                            showError("余额不能小于 0");
+                            System.out.println("余额不能小于 0");
+                            resTable.setValueAt(false, i, 0);
+                        } else {
+                            change += colName[catSel][j + 1] + " = '" + resTable.getValueAt(i, j + 1) + "' ";
+                        }
                     }
                     if (j < colCnt - 2) {
                         cond += " and ";
@@ -288,6 +293,11 @@ public class AccountManager extends JFrame implements ActionListener {
 
         int result = JOptionPane.showConfirmDialog(null, myPanel, "输入要插入的行的信息：", JOptionPane.OK_CANCEL_OPTION);
         if (result == JOptionPane.OK_OPTION) {
+            if (nparaText[2].getText().charAt(0) == '-') {
+                showError("余额不能小于 0");
+                System.out.println("余额不能小于 0");
+                return null;
+            }
             String newRow = "";
             for (int i = 0; i < length - 2; i++) {
                 paras[i] = nparaText[i].getText();
